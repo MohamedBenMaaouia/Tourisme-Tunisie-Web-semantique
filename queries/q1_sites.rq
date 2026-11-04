@@ -1,0 +1,34 @@
+# Q1 - Catalogue des sites touristiques avec leur type le plus précis,
+#      ville, région, prix et statut UNESCO.
+# Paramètres optionnels : ?typeFiltre (IRI de classe), ?regionNom (texte)
+# Notions : chemin de propriété, OPTIONAL, BIND(EXISTS), FILTER NOT EXISTS imbriqué
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?site ?nom ?type ?ville ?region ?prixEntree ?unesco ?lat ?long
+WHERE {
+  ?site a tt:SiteTouristique ;
+        rdfs:label ?nom ;
+        a ?type ;
+        tt:situeDansVille ?v .
+  ?v rdfs:label ?ville ;
+     tt:villeDeRegion/rdfs:label ?region .
+  ?type rdfs:subClassOf* tt:SiteTouristique .
+  FILTER(?type != tt:SitePatrimoineMondial)
+  # on garde uniquement le type le plus spécifique
+  FILTER NOT EXISTS {
+    ?site a ?sousType .
+    ?sousType rdfs:subClassOf ?type .
+    FILTER(?sousType != ?type && ?sousType != tt:SitePatrimoineMondial)
+  }
+  FILTER(!BOUND(?typeFiltre) || EXISTS { ?site a ?typeFiltre })
+  FILTER(!BOUND(?regionNom) || LCASE(STR(?region)) = LCASE(STR(?regionNom)))
+  OPTIONAL { ?site tt:prixEntree ?prixEntree }
+  OPTIONAL { ?site geo:lat ?lat ; geo:long ?long }
+  BIND(EXISTS { ?site a tt:SitePatrimoineMondial } AS ?unesco)
+}
+ORDER BY ?region ?nom

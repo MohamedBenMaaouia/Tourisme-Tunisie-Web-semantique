@@ -1,0 +1,26 @@
+# Q5 - Guides parlant une langue donnée, avec leur activité.
+# Paramètre optionnel : ?langue (ex. "fr")
+# Notions : FILTER EXISTS, OPTIONAL imbriqué, COUNT DISTINCT, GROUP_CONCAT
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?guide ?nom
+       (GROUP_CONCAT(DISTINCT ?l; separator=",") AS ?langues)
+       (COUNT(DISTINCT ?visite) AS ?nbVisites)
+       (COUNT(DISTINCT ?touriste) AS ?nbTouristes)
+WHERE {
+  ?guide a tt:Guide ;
+         foaf:name ?nom ;
+         tt:parleLangue ?l .
+  FILTER(!BOUND(?langue) || EXISTS { ?guide tt:parleLangue ?langue })
+  OPTIONAL {
+    ?visite tt:guidePar ?guide .
+    OPTIONAL { ?touriste tt:participeA ?visite }
+  }
+}
+GROUP BY ?guide ?nom
+ORDER BY DESC(?nbVisites) ?nom

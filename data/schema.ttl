@@ -1,0 +1,208 @@
+@prefix tt:   <http://example.org/tourisme-tunisie#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+#################################################################
+#  Vocabulaire RDFS : Tourisme en Tunisie
+#  Vocabulaires réutilisés : FOAF (personnes), W3C Geo (coordonnées),
+#  Dublin Core Terms (métadonnées du vocabulaire)
+#################################################################
+
+<http://example.org/tourisme-tunisie>
+    dct:title       "Vocabulaire du tourisme en Tunisie"@fr ;
+    dct:description "Sites touristiques, hébergements, guides, visites et avis en Tunisie."@fr ;
+    dct:created     "2026-11-02"^^xsd:date .
+
+# ---------------------------------------------------------------
+#  CLASSES (17) et hiérarchies rdfs:subClassOf
+# ---------------------------------------------------------------
+
+tt:Lieu a rdfs:Class ;
+    rdfs:label "Lieu"@fr ;
+    rdfs:comment "Tout endroit géographique."@fr ;
+    rdfs:subClassOf geo:SpatialThing .          # réutilisation W3C Geo
+
+tt:Region a rdfs:Class ;
+    rdfs:label "Région (gouvernorat)"@fr ;
+    rdfs:subClassOf tt:Lieu .
+
+tt:Ville a rdfs:Class ;
+    rdfs:label "Ville"@fr ;
+    rdfs:subClassOf tt:Lieu .
+
+tt:SiteTouristique a rdfs:Class ;
+    rdfs:label "Site touristique"@fr ;
+    rdfs:subClassOf tt:Lieu .
+
+tt:SiteArcheologique a rdfs:Class ;
+    rdfs:label "Site archéologique"@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:Musee a rdfs:Class ;
+    rdfs:label "Musée"@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:Medina a rdfs:Class ;
+    rdfs:label "Médina"@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:Plage a rdfs:Class ;
+    rdfs:label "Plage"@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:SiteNaturel a rdfs:Class ;
+    rdfs:label "Site naturel"@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:SitePatrimoineMondial a rdfs:Class ;
+    rdfs:label "Site du patrimoine mondial (UNESCO)"@fr ;
+    rdfs:comment "Classe remplie par la règle métier R2 (sites ayant une année d'inscription UNESCO)."@fr ;
+    rdfs:subClassOf tt:SiteTouristique .
+
+tt:Hebergement a rdfs:Class ;
+    rdfs:label "Hébergement"@fr ;
+    rdfs:subClassOf tt:Lieu .
+
+tt:Hotel a rdfs:Class ;
+    rdfs:label "Hôtel"@fr ;
+    rdfs:subClassOf tt:Hebergement .
+
+tt:MaisonDHotes a rdfs:Class ;
+    rdfs:label "Maison d'hôtes"@fr ;
+    rdfs:subClassOf tt:Hebergement .
+
+tt:Guide a rdfs:Class ;
+    rdfs:label "Guide touristique"@fr ;
+    rdfs:subClassOf foaf:Person .               # réutilisation FOAF
+
+tt:Touriste a rdfs:Class ;
+    rdfs:label "Touriste"@fr ;
+    rdfs:subClassOf foaf:Person .
+
+tt:Visite a rdfs:Class ;
+    rdfs:label "Visite guidée"@fr .
+
+tt:Avis a rdfs:Class ;
+    rdfs:label "Avis"@fr ;
+    rdfs:comment "Avis laissé par un touriste sur un site."@fr .
+
+foaf:Person rdfs:subClassOf foaf:Agent .
+
+# ---------------------------------------------------------------
+#  PROPRIÉTÉS (20) avec rdfs:domain / rdfs:range
+#  Hiérarchies rdfs:subPropertyOf : localiseDans, prix
+# ---------------------------------------------------------------
+
+## -- Localisation (hiérarchie 1) --
+tt:localiseDans a rdf:Property ;
+    rdfs:label "localisé dans"@fr ;
+    rdfs:subPropertyOf geo:location ;           # réutilisation W3C Geo
+    rdfs:domain tt:Lieu ;
+    rdfs:range  tt:Lieu .
+
+tt:situeDansVille a rdf:Property ;
+    rdfs:label "situé dans la ville"@fr ;
+    rdfs:subPropertyOf tt:localiseDans ;
+    rdfs:domain tt:Lieu ;
+    rdfs:range  tt:Ville .
+
+tt:villeDeRegion a rdf:Property ;
+    rdfs:label "ville de la région"@fr ;
+    rdfs:subPropertyOf tt:localiseDans ;
+    rdfs:domain tt:Ville ;
+    rdfs:range  tt:Region .
+
+## -- Prix (hiérarchie 2), en dinars tunisiens (TND) --
+tt:prix a rdf:Property ;
+    rdfs:label "prix (TND)"@fr ;
+    rdfs:range xsd:decimal .
+
+tt:prixEntree a rdf:Property ;
+    rdfs:label "prix d'entrée"@fr ;
+    rdfs:subPropertyOf tt:prix ;
+    rdfs:domain tt:SiteTouristique ;
+    rdfs:range  xsd:decimal .
+
+tt:prixNuit a rdf:Property ;
+    rdfs:label "prix par nuit"@fr ;
+    rdfs:subPropertyOf tt:prix ;
+    rdfs:domain tt:Hebergement ;
+    rdfs:range  xsd:decimal .
+
+tt:tarifVisite a rdf:Property ;
+    rdfs:label "tarif de la visite"@fr ;
+    rdfs:subPropertyOf tt:prix ;
+    rdfs:domain tt:Visite ;
+    rdfs:range  xsd:decimal .
+
+## -- Caractéristiques des sites et hébergements --
+tt:anneeInscriptionUnesco a rdf:Property ;
+    rdfs:label "année d'inscription UNESCO"@fr ;
+    rdfs:domain tt:SiteTouristique ;
+    rdfs:range  xsd:integer .
+
+tt:epoque a rdf:Property ;
+    rdfs:label "époque"@fr ;
+    rdfs:domain tt:SiteArcheologique ;
+    rdfs:range  xsd:string .
+
+tt:nombreEtoiles a rdf:Property ;
+    rdfs:label "nombre d'étoiles"@fr ;
+    rdfs:domain tt:Hotel ;
+    rdfs:range  xsd:integer .
+
+## -- Personnes et visites --
+tt:parleLangue a rdf:Property ;
+    rdfs:label "parle la langue"@fr ;
+    rdfs:domain tt:Guide ;
+    rdfs:range  xsd:string .
+
+tt:nationalite a rdf:Property ;
+    rdfs:label "nationalité"@fr ;
+    rdfs:domain tt:Touriste ;
+    rdfs:range  xsd:string .
+
+tt:guidePar a rdf:Property ;
+    rdfs:label "guidée par"@fr ;
+    rdfs:domain tt:Visite ;
+    rdfs:range  tt:Guide .
+
+tt:visiteSite a rdf:Property ;
+    rdfs:label "visite le site"@fr ;
+    rdfs:domain tt:Visite ;
+    rdfs:range  tt:SiteTouristique .
+
+tt:dateVisite a rdf:Property ;
+    rdfs:label "date de la visite"@fr ;
+    rdfs:domain tt:Visite ;
+    rdfs:range  xsd:date .
+
+tt:participeA a rdf:Property ;
+    rdfs:label "participe à"@fr ;
+    rdfs:domain tt:Touriste ;
+    rdfs:range  tt:Visite .
+
+tt:sejourneA a rdf:Property ;
+    rdfs:label "séjourne à"@fr ;
+    rdfs:domain tt:Touriste ;
+    rdfs:range  tt:Hebergement .
+
+## -- Avis --
+tt:auteur a rdf:Property ;
+    rdfs:label "auteur de l'avis"@fr ;
+    rdfs:domain tt:Avis ;
+    rdfs:range  tt:Touriste .
+
+tt:concerne a rdf:Property ;
+    rdfs:label "concerne le site"@fr ;
+    rdfs:domain tt:Avis ;
+    rdfs:range  tt:SiteTouristique .
+
+tt:note a rdf:Property ;
+    rdfs:label "note (1 à 5)"@fr ;
+    rdfs:domain tt:Avis ;
+    rdfs:range  xsd:integer .

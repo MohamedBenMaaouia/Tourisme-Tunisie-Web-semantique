@@ -1,0 +1,67 @@
+digraph schema {
+  graph [rankdir=RL, fontname="Helvetica", nodesep=0.35, ranksep=1.1, splines=spline, bgcolor="white",
+         label="Vocabulaire RDFS : Tourisme en Tunisie (tt:)", labelloc=t, fontsize=20];
+  node  [shape=plain, fontname="Helvetica", fontsize=11];
+  edge  [fontname="Helvetica", fontsize=9];
+
+  // ---------- vocabulaires réutilisés ----------
+  node [shape=box, style="rounded,filled", fillcolor="#FDEBD0", color="#CA6F1E"];
+  SpatialThing [label="geo:SpatialThing"];
+  Agent        [label="foaf:Agent"];
+  Person       [label="foaf:Person\nfoaf:name"];
+
+  // ---------- classes tt: ----------
+  node [shape=box, style="rounded,filled", fillcolor="#D6EAF8", color="#2471A3"];
+  Lieu    [label="tt:Lieu\ngeo:lat, geo:long"];
+  Region  [label="tt:Region"];
+  Ville   [label="tt:Ville"];
+  Site    [label="tt:SiteTouristique\nprixEntree : xsd:decimal\nanneeInscriptionUnesco : xsd:integer"];
+  Arch    [label="tt:SiteArcheologique\nepoque : xsd:string"];
+  Musee   [label="tt:Musee"];
+  Medina  [label="tt:Medina"];
+  Plage   [label="tt:Plage"];
+  Nat     [label="tt:SiteNaturel"];
+  Unesco  [label="tt:SitePatrimoineMondial\n(remplie par la règle R2)", fillcolor="#D5F5E3", color="#1E8449"];
+  Heb     [label="tt:Hebergement\nprixNuit : xsd:decimal"];
+  Hotel   [label="tt:Hotel\nnombreEtoiles : xsd:integer"];
+  MH      [label="tt:MaisonDHotes"];
+  Guide   [label="tt:Guide\nparleLangue : xsd:string"];
+  Tour    [label="tt:Touriste\nnationalite : xsd:string"];
+  Visite  [label="tt:Visite\ndateVisite : xsd:date\ntarifVisite : xsd:decimal"];
+  Avis    [label="tt:Avis\nnote : xsd:integer"];
+
+  // ---------- rdfs:subClassOf ----------
+  edge [arrowhead=empty, style=solid, color="#555555", label=""];
+  Lieu -> SpatialThing; Person -> Agent;
+  Region -> Lieu; Ville -> Lieu; Site -> Lieu; Heb -> Lieu;
+  Arch -> Site; Musee -> Site; Medina -> Site; Plage -> Site; Nat -> Site; Unesco -> Site;
+  Hotel -> Heb; MH -> Heb;
+  Guide -> Person; Tour -> Person;
+
+  // ---------- propriétés objet (domain -> range) ----------
+  edge [arrowhead=normal, style=dashed, color="#2471A3", fontcolor="#2471A3", constraint=true];
+  Lieu   -> Lieu   [label="localiseDans\n(transitive, R1)"];
+  Site   -> Ville  [label="situeDansVille"];
+  Heb    -> Ville  [label="situeDansVille"];
+  Ville  -> Region [label="villeDeRegion"];
+  Visite -> Guide  [label="guidePar"];
+  Visite -> Site   [label="visiteSite"];
+  Tour   -> Visite [label="participeA"];
+  Tour   -> Heb    [label="sejourneA"];
+  Avis   -> Tour   [label="auteur"];
+  Avis   -> Site   [label="concerne"];
+
+  // ---------- légende ----------
+  subgraph cluster_legend {
+    label="Légende"; fontsize=11; color="#AAAAAA"; style=rounded;
+    node [shape=plaintext, style="", fillcolor=none, color=none];
+    leg [label=<
+      <TABLE BORDER="0" CELLSPACING="3">
+        <TR><TD ALIGN="LEFT">─▷  rdfs:subClassOf</TD></TR>
+        <TR><TD ALIGN="LEFT"><FONT COLOR="#2471A3">╌▶  propriété (rdfs:domain → rdfs:range)</FONT></TD></TR>
+        <TR><TD ALIGN="LEFT">subPropertyOf : situeDansVille, villeDeRegion ⊑ localiseDans ⊑ geo:location</TD></TR>
+        <TR><TD ALIGN="LEFT">subPropertyOf : prixEntree, prixNuit, tarifVisite ⊑ prix</TD></TR>
+        <TR><TD ALIGN="LEFT" BGCOLOR="#FDEBD0">vocabulaires réutilisés (FOAF, W3C Geo)</TD></TR>
+      </TABLE>>];
+  }
+}

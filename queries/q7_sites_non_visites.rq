@@ -1,0 +1,17 @@
+# Q7 - Sites touristiques qui ne figurent dans aucune visite guidée.
+# Notions : négation avec FILTER NOT EXISTS
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?site ?nom ?ville
+WHERE {
+  ?site a tt:SiteTouristique ;
+        rdfs:label ?nom ;
+        tt:situeDansVille/rdfs:label ?ville .
+  FILTER NOT EXISTS { ?visite tt:visiteSite ?site }
+}
+ORDER BY ?nom

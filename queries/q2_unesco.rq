@@ -1,0 +1,20 @@
+# Q2 - Sites du patrimoine mondial UNESCO inscrits jusqu'à une année donnée.
+# Paramètre : ?avant (xsd:integer)
+# Notions : FILTER numérique, ORDER BY multiple, classe remplie par la règle R2
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?site ?nom ?annee ?ville ?epoque
+WHERE {
+  ?site a tt:SitePatrimoineMondial ;
+        rdfs:label ?nom ;
+        tt:anneeInscriptionUnesco ?annee ;
+        tt:situeDansVille/rdfs:label ?ville .
+  OPTIONAL { ?site tt:epoque ?epoque }
+  FILTER(?annee <= ?avant)
+}
+ORDER BY ?annee ?nom

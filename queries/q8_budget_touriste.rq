@@ -1,0 +1,31 @@
+# Q8 - Budget d'un touriste : tarifs des visites + droits d'entrée des sites visités.
+# Paramètre optionnel : ?touriste (IRI)
+# Notions : UNION, BIND, SUM(IF(...)), super-propriété tt:prix (règle rdfs7)
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?touriste ?nom ?nationalite
+       (COUNT(DISTINCT ?visite) AS ?nbVisites)
+       (SUM(IF(?poste = "visite", ?montant, 0)) AS ?totalVisites)
+       (SUM(IF(?poste = "entree", ?montant, 0)) AS ?totalEntrees)
+       (SUM(?montant) AS ?total)
+WHERE {
+  ?touriste a tt:Touriste ;
+            foaf:name ?nom ;
+            tt:nationalite ?nationalite ;
+            tt:participeA ?visite .
+  {
+    ?visite tt:prix ?montant .
+    BIND("visite" AS ?poste)
+  } UNION {
+    ?visite tt:visiteSite ?s .
+    ?s tt:prix ?montant .
+    BIND("entree" AS ?poste)
+  }
+}
+GROUP BY ?touriste ?nom ?nationalite
+ORDER BY DESC(?total)

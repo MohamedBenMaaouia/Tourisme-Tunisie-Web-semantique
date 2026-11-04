@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 700" width="1040" height="700" aria-label="Hiérarchie des classes du vocabulaire tourisme" font-family="IBM Plex Sans, Arial, sans-serif">
+<defs>
+<marker id="sub" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="14" markerHeight="14" orient="auto-start-reverse"><path d="M1 1L11 6L1 11z" fill="#F6F1E7" stroke="#5B6573" stroke-width="1.4"/></marker>
+</defs>
+<g fill="none" stroke="#5B6573" stroke-width="2">
+<path d="M470 110V64" marker-end="url(#sub)"/>
+<path d="M90 220V192H810V220M250 192V220M500 192V220M470 192V164" />
+<path d="M470 192V164" marker-end="url(#sub)"/>
+<path d="M390 612V274" marker-end="url(#sub)"/>
+<path d="M390 322H420M390 380H420M390 438H420M390 496H420M390 554H420M390 612H420"/>
+<path d="M730 380V274" marker-end="url(#sub)"/>
+<path d="M730 322H760M730 380H760"/>
+<path d="M860 530V498" marker-end="url(#sub)"/>
+<path d="M780 630V608H940V630M860 608V580" />
+<path d="M860 608V580" marker-end="url(#sub)"/>
+</g>
+<g font-size="24" fill="#1B2333" text-anchor="middle">
+<rect x="330" y="10" width="280" height="52" rx="10" fill="#FCE9DF" stroke="#B5482E" stroke-width="2"/>
+<text x="470" y="44">geo:SpatialThing</text>
+<rect x="400" y="110" width="140" height="52" rx="10" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2.5"/>
+<text x="470" y="144" font-weight="700">Lieu</text>
+<rect x="10" y="220" width="160" height="52" rx="10" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2"/>
+<text x="90" y="254">Région</text>
+<rect x="190" y="220" width="120" height="52" rx="10" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2"/>
+<text x="250" y="254">Ville</text>
+<rect x="360" y="220" width="280" height="52" rx="10" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2.5"/>
+<text x="500" y="254" font-weight="700">Site touristique</text>
+<rect x="690" y="220" width="240" height="52" rx="10" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2.5"/>
+<text x="810" y="254" font-weight="700">Hébergement</text>
+</g>
+<g font-size="22" fill="#1B2333">
+<rect x="420" y="300" width="240" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="440" y="330">Site archéologique</text>
+<rect x="420" y="358" width="240" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="440" y="388">Musée</text>
+<rect x="420" y="416" width="240" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="440" y="446">Médina</text>
+<rect x="420" y="474" width="240" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="440" y="504">Plage</text>
+<rect x="420" y="532" width="240" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="440" y="562">Site naturel</text>
+<rect x="420" y="590" width="240" height="44" rx="8" fill="#E3F1E8" stroke="#2E7D4F" stroke-width="2"/><text x="440" y="620">Patrimoine mondial</text>
+<text x="420" y="672" font-size="20" fill="#2E7D4F">rempli par la règle R2</text>
+<rect x="760" y="300" width="200" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="780" y="330">Hôtel</text>
+<rect x="760" y="358" width="200" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="780" y="388">Maison d'hôtes</text>
+</g>
+<g font-size="22" fill="#1B2333" text-anchor="middle">
+<rect x="760" y="452" width="200" height="44" rx="8" fill="#FCE9DF" stroke="#B5482E" stroke-width="2"/><text x="860" y="482">foaf:Agent</text>
+<rect x="760" y="532" width="200" height="44" rx="8" fill="#FCE9DF" stroke="#B5482E" stroke-width="2"/><text x="860" y="562">foaf:Person</text>
+<rect x="720" y="630" width="120" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="780" y="660">Guide</text>
+<rect x="860" y="630" width="160" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="940" y="660">Touriste</text>
+<text x="160" y="370" font-size="20" fill="#5B6573">classes sans parent</text>
+<rect x="60" y="390" width="200" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="160" y="420">Visite</text>
+<rect x="60" y="448" width="200" height="44" rx="8" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="1.5"/><text x="160" y="478">Avis</text>
+</g>
+<g font-size="20" fill="#1B2333">
+<rect x="20" y="560" width="22" height="22" rx="4" fill="#FCE9DF" stroke="#B5482E" stroke-width="2"/><text x="54" y="578">vocabulaire réutilisé</text>
+<rect x="20" y="600" width="22" height="22" rx="4" fill="#FFFFFF" stroke="#1C6DD0" stroke-width="2"/><text x="54" y="618">classe tt:</text>
+<path d="M20 652H60" stroke="#5B6573" stroke-width="2" marker-end="url(#sub)"/><text x="74" y="658">rdfs:subClassOf</text>
+</g>
+</svg>

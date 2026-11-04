@@ -1,0 +1,242 @@
+@prefix tt:   <http://example.org/tourisme-tunisie#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+#################################################################
+#  Données : Tourisme en Tunisie
+#  Les sites UNESCO et leurs années d'inscription sont réels.
+#  Les prix, hôtels, guides, touristes, visites et avis sont des
+#  données d'exemple fictives.
+#
+#  Choix volontaire : on ne déclare que le type le plus précis
+#  (ex. tt:Hotel) et certaines ressources n'ont AUCUN type
+#  (villes, régions, touristes, visites, avis). Ces types sont
+#  déduits par l'inférence RDFS (domain, range, subClassOf).
+#################################################################
+
+# ---------------- Régions (gouvernorats) : non typées ----------------
+tt:R_Tunis    rdfs:label "Tunis"@fr .
+tt:R_Nabeul   rdfs:label "Nabeul"@fr .
+tt:R_Sousse   rdfs:label "Sousse"@fr .
+tt:R_Mahdia   rdfs:label "Mahdia"@fr .
+tt:R_Kairouan rdfs:label "Kairouan"@fr .
+tt:R_Beja     rdfs:label "Béja"@fr .
+tt:R_Bizerte  rdfs:label "Bizerte"@fr .
+tt:R_Medenine rdfs:label "Médenine"@fr .
+tt:R_Tozeur   rdfs:label "Tozeur"@fr .
+tt:R_Gabes    rdfs:label "Gabès"@fr .
+
+# ---------------- Villes : typées par le range de situeDansVille ----------------
+tt:V_Tunis       rdfs:label "Tunis"@fr          ; tt:villeDeRegion tt:R_Tunis .
+tt:V_Carthage    rdfs:label "Carthage"@fr       ; tt:villeDeRegion tt:R_Tunis .
+tt:V_SidiBouSaid rdfs:label "Sidi Bou Saïd"@fr  ; tt:villeDeRegion tt:R_Tunis .
+tt:V_Bardo       rdfs:label "Le Bardo"@fr       ; tt:villeDeRegion tt:R_Tunis .
+tt:V_Hammamet    rdfs:label "Hammamet"@fr       ; tt:villeDeRegion tt:R_Nabeul .
+tt:V_ElHaouaria  rdfs:label "El Haouaria"@fr    ; tt:villeDeRegion tt:R_Nabeul .
+tt:V_Sousse      rdfs:label "Sousse"@fr         ; tt:villeDeRegion tt:R_Sousse .
+tt:V_ElJem       rdfs:label "El Jem"@fr         ; tt:villeDeRegion tt:R_Mahdia .
+tt:V_Mahdia      rdfs:label "Mahdia"@fr         ; tt:villeDeRegion tt:R_Mahdia .
+tt:V_Kairouan    rdfs:label "Kairouan"@fr       ; tt:villeDeRegion tt:R_Kairouan .
+tt:V_Teboursouk  rdfs:label "Téboursouk"@fr     ; tt:villeDeRegion tt:R_Beja .
+tt:V_Mateur      rdfs:label "Mateur"@fr         ; tt:villeDeRegion tt:R_Bizerte .
+tt:V_HoumtSouk   rdfs:label "Houmt Souk (Djerba)"@fr ; tt:villeDeRegion tt:R_Medenine .
+tt:V_Tozeur      rdfs:label "Tozeur"@fr         ; tt:villeDeRegion tt:R_Tozeur .
+tt:V_Matmata     rdfs:label "Matmata"@fr        ; tt:villeDeRegion tt:R_Gabes .
+
+# ---------------- Sites touristiques ----------------
+tt:Carthage a tt:SiteArcheologique ;
+    rdfs:label "Site archéologique de Carthage"@fr ;
+    tt:situeDansVille tt:V_Carthage ;
+    tt:epoque "Punique et romaine" ;
+    tt:anneeInscriptionUnesco 1979 ;
+    tt:prixEntree 12.0 ;
+    geo:lat 36.8528 ; geo:long 10.3233 .
+
+tt:ElJem a tt:SiteArcheologique ;
+    rdfs:label "Amphithéâtre d'El Jem"@fr ;
+    tt:situeDansVille tt:V_ElJem ;
+    tt:epoque "Romaine" ;
+    tt:anneeInscriptionUnesco 1979 ;
+    tt:prixEntree 12.0 ;
+    geo:lat 35.2964 ; geo:long 10.7069 .
+
+tt:Dougga a tt:SiteArcheologique ;
+    rdfs:label "Dougga / Thugga"@fr ;
+    tt:situeDansVille tt:V_Teboursouk ;
+    tt:epoque "Numide et romaine" ;
+    tt:anneeInscriptionUnesco 1997 ;
+    tt:prixEntree 10.0 ;
+    geo:lat 36.4219 ; geo:long 9.2203 .
+
+tt:Kerkouane a tt:SiteArcheologique ;
+    rdfs:label "Cité punique de Kerkouane"@fr ;
+    tt:situeDansVille tt:V_ElHaouaria ;
+    tt:epoque "Punique" ;
+    tt:anneeInscriptionUnesco 1985 ;
+    tt:prixEntree 8.0 ;
+    geo:lat 36.9464 ; geo:long 11.0992 .
+
+tt:MedinaTunis a tt:Medina ;
+    rdfs:label "Médina de Tunis"@fr ;
+    tt:situeDansVille tt:V_Tunis ;
+    tt:anneeInscriptionUnesco 1979 ;
+    tt:prixEntree 0.0 ;
+    geo:lat 36.7985 ; geo:long 10.1700 .
+
+tt:MedinaSousse a tt:Medina ;
+    rdfs:label "Médina de Sousse"@fr ;
+    tt:situeDansVille tt:V_Sousse ;
+    tt:anneeInscriptionUnesco 1988 ;
+    tt:prixEntree 0.0 ;
+    geo:lat 35.8256 ; geo:long 10.6411 .
+
+tt:MedinaKairouan a tt:Medina ;
+    rdfs:label "Médina de Kairouan"@fr ;
+    tt:situeDansVille tt:V_Kairouan ;
+    tt:anneeInscriptionUnesco 1988 ;
+    tt:prixEntree 0.0 ;
+    geo:lat 35.6812 ; geo:long 10.1036 .
+
+tt:Ichkeul a tt:SiteNaturel ;
+    rdfs:label "Parc national de l'Ichkeul"@fr ;
+    tt:situeDansVille tt:V_Mateur ;
+    tt:anneeInscriptionUnesco 1980 ;
+    tt:prixEntree 5.0 ;
+    geo:lat 37.1636 ; geo:long 9.6747 .
+
+tt:ChottElJerid a tt:SiteNaturel ;
+    rdfs:label "Chott el-Jérid"@fr ;
+    tt:situeDansVille tt:V_Tozeur ;
+    tt:prixEntree 0.0 ;
+    geo:lat 33.7000 ; geo:long 8.4300 .
+
+tt:Matmata a tt:SiteTouristique ;
+    rdfs:label "Maisons troglodytes de Matmata"@fr ;
+    tt:situeDansVille tt:V_Matmata ;
+    tt:prixEntree 3.0 ;
+    geo:lat 33.5447 ; geo:long 9.9667 .
+
+tt:Bardo a tt:Musee ;
+    rdfs:label "Musée national du Bardo"@fr ;
+    tt:situeDansVille tt:V_Bardo ;
+    tt:prixEntree 13.0 ;
+    geo:lat 36.8094 ; geo:long 10.1347 .
+
+tt:MuseeSousse a tt:Musee ;
+    rdfs:label "Musée archéologique de Sousse"@fr ;
+    tt:situeDansVille tt:V_Sousse ;
+    tt:prixEntree 10.0 ;
+    geo:lat 35.8217 ; geo:long 10.6339 .
+
+tt:SidiBouSaid a tt:SiteTouristique ;
+    rdfs:label "Village de Sidi Bou Saïd"@fr ;
+    tt:situeDansVille tt:V_SidiBouSaid ;
+    tt:prixEntree 0.0 ;
+    geo:lat 36.8708 ; geo:long 10.3417 .
+
+tt:PlageHammamet a tt:Plage ;
+    rdfs:label "Plage de Hammamet"@fr ;
+    tt:situeDansVille tt:V_Hammamet ;
+    tt:prixEntree 0.0 ;
+    geo:lat 36.4000 ; geo:long 10.6100 .
+
+tt:PlageSidiMahrez a tt:Plage ;
+    rdfs:label "Plage de Sidi Mahrez (Djerba)"@fr ;
+    tt:situeDansVille tt:V_HoumtSouk ;
+    tt:prixEntree 0.0 ;
+    geo:lat 33.8400 ; geo:long 10.9800 .
+
+tt:PlageMahdia a tt:Plage ;
+    rdfs:label "Plage de Mahdia"@fr ;
+    tt:situeDansVille tt:V_Mahdia ;
+    tt:prixEntree 0.0 ;
+    geo:lat 35.5100 ; geo:long 11.0600 .
+
+# ---------------- Hébergements (noms fictifs) ----------------
+tt:H_Jasmin a tt:Hotel ;
+    rdfs:label "Hôtel Le Jasmin Bleu"@fr ;
+    tt:situeDansVille tt:V_Hammamet ; tt:nombreEtoiles 5 ; tt:prixNuit 420.0 .
+
+tt:H_Corniche a tt:Hotel ;
+    rdfs:label "Hôtel La Corniche"@fr ;
+    tt:situeDansVille tt:V_Sousse ; tt:nombreEtoiles 4 ; tt:prixNuit 260.0 .
+
+tt:H_Medina a tt:Hotel ;
+    rdfs:label "Hôtel Bab El Bhar"@fr ;
+    tt:situeDansVille tt:V_Tunis ; tt:nombreEtoiles 3 ; tt:prixNuit 150.0 .
+
+tt:H_Djerba a tt:Hotel ;
+    rdfs:label "Hôtel Ulysse Palm"@fr ;
+    tt:situeDansVille tt:V_HoumtSouk ; tt:nombreEtoiles 5 ; tt:prixNuit 480.0 .
+
+tt:H_Oasis a tt:Hotel ;
+    rdfs:label "Hôtel Palmeraie du Jérid"@fr ;
+    tt:situeDansVille tt:V_Tozeur ; tt:nombreEtoiles 4 ; tt:prixNuit 230.0 .
+
+tt:H_Mahdia a tt:Hotel ;
+    rdfs:label "Hôtel Cap Africa"@fr ;
+    tt:situeDansVille tt:V_Mahdia ; tt:nombreEtoiles 3 ; tt:prixNuit 140.0 .
+
+tt:MH_SidiBou a tt:MaisonDHotes ;
+    rdfs:label "Dar Zitouna"@fr ;
+    tt:situeDansVille tt:V_SidiBouSaid ; tt:prixNuit 320.0 .
+
+tt:MH_Kairouan a tt:MaisonDHotes ;
+    rdfs:label "Dar Aghlabide"@fr ;
+    tt:situeDansVille tt:V_Kairouan ; tt:prixNuit 180.0 .
+
+# ---------------- Guides (fictifs) ----------------
+# G1 et G2 sont typés ; G3 et G4 ne le sont pas (typés par le range de tt:guidePar)
+tt:G1 a tt:Guide ; foaf:name "Sami Ben Ali" ;
+    tt:parleLangue "fr", "en", "ar" .
+tt:G2 a tt:Guide ; foaf:name "Leila Mansour" ;
+    tt:parleLangue "fr", "it", "ar" .
+tt:G3 foaf:name "Karim Jaziri" ;
+    tt:parleLangue "en", "de", "ar" .
+tt:G4 foaf:name "Amira Gharbi" ;
+    tt:parleLangue "fr", "en", "ja" .
+
+# ---------------- Touristes (fictifs) : non typés ----------------
+tt:T1 foaf:name "Julie Martin"  ; tt:nationalite "France"     ; tt:sejourneA tt:H_Medina .
+tt:T2 foaf:name "Hans Müller"   ; tt:nationalite "Allemagne"  ; tt:sejourneA tt:H_Djerba .
+tt:T3 foaf:name "Emma Rossi"    ; tt:nationalite "Italie"     ; tt:sejourneA tt:H_Corniche .
+tt:T4 foaf:name "John Smith"    ; tt:nationalite "Royaume-Uni"; tt:sejourneA tt:H_Jasmin .
+tt:T5 foaf:name "Yuki Tanaka"   ; tt:nationalite "Japon"      ; tt:sejourneA tt:MH_SidiBou .
+tt:T6 foaf:name "Nadia Benali"  ; tt:nationalite "Algérie"    ; tt:sejourneA tt:H_Oasis .
+
+# ---------------- Visites guidées : non typées ----------------
+tt:VIS1 tt:guidePar tt:G1 ; tt:dateVisite "2026-10-03"^^xsd:date ; tt:tarifVisite 90.0 ;
+    tt:visiteSite tt:Carthage, tt:SidiBouSaid, tt:Bardo .
+tt:VIS2 tt:guidePar tt:G2 ; tt:dateVisite "2026-10-05"^^xsd:date ; tt:tarifVisite 70.0 ;
+    tt:visiteSite tt:MedinaSousse, tt:MuseeSousse .
+tt:VIS3 tt:guidePar tt:G3 ; tt:dateVisite "2026-10-08"^^xsd:date ; tt:tarifVisite 110.0 ;
+    tt:visiteSite tt:ElJem, tt:MedinaKairouan .
+tt:VIS4 tt:guidePar tt:G1 ; tt:dateVisite "2026-10-12"^^xsd:date ; tt:tarifVisite 80.0 ;
+    tt:visiteSite tt:Dougga .
+tt:VIS5 tt:guidePar tt:G4 ; tt:dateVisite "2026-10-15"^^xsd:date ; tt:tarifVisite 60.0 ;
+    tt:visiteSite tt:MedinaTunis, tt:Bardo .
+tt:VIS6 tt:guidePar tt:G3 ; tt:dateVisite "2026-10-20"^^xsd:date ; tt:tarifVisite 95.0 ;
+    tt:visiteSite tt:ChottElJerid, tt:PlageSidiMahrez .
+
+tt:T1 tt:participeA tt:VIS1, tt:VIS5 .
+tt:T2 tt:participeA tt:VIS6 .
+tt:T3 tt:participeA tt:VIS2, tt:VIS3 .
+tt:T4 tt:participeA tt:VIS1, tt:VIS4 .
+tt:T5 tt:participeA tt:VIS5 .
+tt:T6 tt:participeA tt:VIS6, tt:VIS3 .
+
+# ---------------- Avis : non typés ----------------
+tt:A1  tt:auteur tt:T1 ; tt:concerne tt:Carthage       ; tt:note 5 .
+tt:A2  tt:auteur tt:T4 ; tt:concerne tt:Carthage       ; tt:note 4 .
+tt:A3  tt:auteur tt:T1 ; tt:concerne tt:Bardo          ; tt:note 5 .
+tt:A4  tt:auteur tt:T5 ; tt:concerne tt:Bardo          ; tt:note 4 .
+tt:A5  tt:auteur tt:T3 ; tt:concerne tt:ElJem          ; tt:note 5 .
+tt:A6  tt:auteur tt:T6 ; tt:concerne tt:ElJem          ; tt:note 5 .
+tt:A7  tt:auteur tt:T3 ; tt:concerne tt:MedinaSousse   ; tt:note 3 .
+tt:A8  tt:auteur tt:T2 ; tt:concerne tt:PlageSidiMahrez; tt:note 4 .
+tt:A9  tt:auteur tt:T2 ; tt:concerne tt:ChottElJerid   ; tt:note 5 .
+tt:A10 tt:auteur tt:T4 ; tt:concerne tt:Dougga         ; tt:note 4 .
+tt:A11 tt:auteur tt:T5 ; tt:concerne tt:MedinaTunis    ; tt:note 3 .
+tt:A12 tt:auteur tt:T6 ; tt:concerne tt:MedinaKairouan ; tt:note 4 .

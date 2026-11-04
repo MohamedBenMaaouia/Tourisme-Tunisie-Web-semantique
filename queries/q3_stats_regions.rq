@@ -1,0 +1,24 @@
+# Q3 - Nombre de sites et prix d'entrée moyen par région.
+# Notions : agrégats COUNT / AVG / GROUP_CONCAT, GROUP BY, propriété
+#           tt:localiseDans (super-propriété + transitivité R1)
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX tt:   <http://example.org/tourisme-tunisie#>
+
+SELECT ?region ?nomRegion
+       (COUNT(DISTINCT ?site) AS ?nbSites)
+       (AVG(?prix) AS ?prixMoyen)
+       (GROUP_CONCAT(DISTINCT ?nomSite; separator=" | ") AS ?sites)
+WHERE {
+  ?site a tt:SiteTouristique ;
+        rdfs:label ?nomSite ;
+        tt:localiseDans ?region .
+  ?region a tt:Region ;
+          rdfs:label ?nomRegion .
+  OPTIONAL { ?site tt:prixEntree ?prix }
+}
+GROUP BY ?region ?nomRegion
+ORDER BY DESC(?nbSites) ?nomRegion
